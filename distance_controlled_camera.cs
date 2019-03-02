@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
-public class distance_controlled_camera : MonoBehaviour
+public class distance_controlled_camera_v1 : MonoBehaviour
 {
 	[SerializeField]public Transform[] Targets;
-	[SerializeField]public float maxDist;
-	[SerializeField]public CinemachineVirtualCamera Blending_VCam;
+	[SerializeField]public float MixDist;
+//	[SerializeField]public CinemachineVirtualCamera MixVCam;
 
 	//public Transform Target_02;
     // Start is called before the first frame update
@@ -28,8 +28,10 @@ public class distance_controlled_camera : MonoBehaviour
     {
 		
 		float dist = Vector3.Distance (Targets[0].position, transform.position);
+		float PlayerWeight = dist / maxDist;
 		if (dist <= maxDist) {
-			Blending_VCam.Priority = 2;
+			GetComponent<CinemachineMixingCamera> ().m_Weight0 = PlayerWeight;
+			GetComponent<CinemachineMixingCamera> ().m_Weight0 = 1-PlayerWeight;
 		}
     }
 }
